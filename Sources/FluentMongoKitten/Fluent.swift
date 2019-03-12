@@ -14,9 +14,9 @@ public protocol Fluent: DocumentMappable {
   
   static var collectionName: String { get }
   
-  static func collection(database: Database) -> MongoKitten.Collection
-  
   static var collection: MongoKitten.Collection { get set }
+  
+  static func setCollection(database: Database)
   
   static func find(where query: Query) -> MappedCursor<FindCursor, Self>
   
