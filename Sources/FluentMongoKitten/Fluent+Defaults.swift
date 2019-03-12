@@ -28,16 +28,24 @@ extension Fluent {
   }
   
   public static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>] {
-    return models.map { $0.update("id" == $0.id) }
+    return models.map { $0.update() }
+  }
+  
+  public static func delete(models: [Self]) -> [EventLoopFuture<Int>] {
+    return models.map { $0.delete() }
+  }
+  
+  public static func delete(where query: Query) -> EventLoopFuture<Int> {
+    return Self.collection.deleteAll(where: query)
   }
   
   // MARK: - instance queries
   
-  public func update(_ query: Query) -> EventLoopFuture<UpdateReply> {
-    return Self.collection.update(where: query, to: self.document)
+  public func update() -> EventLoopFuture<UpdateReply> {
+    return Self.collection.update(where: "id" == id, to: self.document)
   }
   
-  public func delete(_ query: Query) throws -> EventLoopFuture<Int> {
-    return Self.collection.deleteOne(where: query)
+  public func delete() throws -> EventLoopFuture<Int> {
+    return Self.collection.deleteOne(where: "id" == id)
   }
 }

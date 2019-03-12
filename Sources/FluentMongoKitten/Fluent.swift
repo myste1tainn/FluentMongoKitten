@@ -20,18 +20,18 @@ public protocol Fluent: DocumentMappable {
   
   static func find(where query: Query) -> MappedCursor<FindCursor, Self>
   
-  static func update(where query: Query, document: Document) -> [Self]
+  static func update(where query: Query, document: Document) -> EventLoopFuture<UpdateReply>
   
-  static func update(models: [Self]) -> [Self]
+  static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>]
   
-  static func delete(where query: Query) -> [Self]
+  static func delete(where query: Query) -> EventLoopFuture<Int>
   
-  static func delete(models: [Self]) -> [Self]
+  static func delete(models: [Self]) -> [EventLoopFuture<Int>]
   
   init(where query: Query)
   
-  func update(query: Query) throws -> Self
+  func update() -> EventLoopFuture<UpdateReply>
   
-  func delete(query: Query) throws -> Self
+  func delete() -> EventLoopFuture<Int>
 }
 
