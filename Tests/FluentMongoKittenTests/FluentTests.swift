@@ -64,4 +64,33 @@ class FluentTests: XCTestCase {
     XCTAssertNil(try! Person.find(where: "name" == "Arnon").getFirstResult().wait())
   }
   
+  func test_save_newlyCreatedObject_itInsert() {
+    let person = Person(name: "Arnon", lastname: "Keereena")
+    _ = try? person.save().wait()
+    
+    let find = Person.find(where: "name" == "Arnon")
+    var savedPerson: Person?
+    let execution = { savedPerson = try find.getFirstResult().wait() }
+    XCTAssertNoThrow(try execution())
+    XCTAssertNotNil(savedPerson)
+    XCTAssertEqual(savedPerson?.name, "Arnon")
+    XCTAssertEqual(savedPerson?.lastname, "Keereena")
+  }
+  
+  func test_save_existingObject_itUpdate() {
+    _ = (try? Person(name: "Arnon", lastname: "Keereena").insert().wait())
+    var person = try! Person.find(where: "name" == "Arnon").getFirstResult().wait()
+    let expectId = person?.id
+    person?.lastname = "Acme"
+    _ = try? person?.save().wait()
+    
+    let find = Person.find(where: "name" == "Arnon")
+    var savedPerson: Person?
+    let execution = { savedPerson = try find.getFirstResult().wait() }
+    XCTAssertNoThrow(try execution())
+    XCTAssertNotNil(savedPerson)
+    XCTAssertEqual(savedPerson?.id, expectId)
+    XCTAssertEqual(savedPerson?.name, "Arnon")
+    XCTAssertEqual(savedPerson?.lastname, "Acme")
+  }
 }
