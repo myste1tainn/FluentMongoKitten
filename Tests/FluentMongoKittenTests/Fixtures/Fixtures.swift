@@ -13,7 +13,7 @@ class Fixtures {
     service.register(Person.self)
   }
   
-  static func clear() {
+  static func reset() {
     service.drop(Person.self)
   }
 }

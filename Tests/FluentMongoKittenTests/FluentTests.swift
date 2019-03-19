@@ -11,7 +11,10 @@ class FluentTests: XCTestCase {
   
   override class func setUp() {
     Fixtures.setup()
-    Fxitures.clear()
+  }
+  
+  override class func tearDown() {
+    Fixtures.reset()
   }
   
   func test_insert_whereModelHaveAllValue_itSave() {
