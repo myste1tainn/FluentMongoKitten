@@ -24,12 +24,12 @@ extension Fluent {
   
   @discardableResult
   public func update() -> EventLoopFuture<UpdateReply> {
-    return Self.collection.update(where: "id" == id, to: self.document)
+    return Self.collection.update(where: "_id" == id, to: self.document)
   }
   
   @discardableResult
   public func delete() -> EventLoopFuture<Int> {
-    return Self.collection.deleteOne(where: "id" == id)
+    return Self.collection.deleteOne(where: "_id" == id)
   }
   
   // MARK: - Alias / Shorthand
