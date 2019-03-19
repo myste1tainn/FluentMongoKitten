@@ -20,4 +20,12 @@ public final class FluentService {
   public func register<T: Fluent>(_ fluentType: T.Type) {
     fluentType.setCollection(database: database)
   }
+  
+  public func drop<T: Fluent>(_ fluentType: T.Type) {
+    do {
+      try fluentType.collection.drop().wait()
+    } catch {
+      try? database[fluentType.collectionName].drop().wait()
+    }
+  }
 }

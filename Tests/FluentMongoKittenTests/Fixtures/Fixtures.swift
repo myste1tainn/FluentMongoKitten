@@ -6,8 +6,14 @@ import Foundation
 import FluentMongoKitten
 
 class Fixtures {
+  
+  static let service = try! FluentService(host: "localhost", databaseName: "fluentmongokittenunittests")
+  
   static func setup() {
-    let service = try! FluentService(host: "localhost", databaseName: "fluentmongokittenunittests")
     service.register(Person.self)
+  }
+  
+  static func clear() {
+    service.drop(Person.self)
   }
 }
