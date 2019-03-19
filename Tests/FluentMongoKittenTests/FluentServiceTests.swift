@@ -2,16 +2,23 @@ import XCTest
 @testable import FluentMongoKitten
 
 final class FluentServiceTests: XCTestCase {
+  
   func test_connectToCorrectDb_itSuccess() {
-    do {
-      try FluentService(host: "localhost", databaseName: "fluentMongoKittenTest")
-    } catch {
-      
+    let host = "localhost"
+    let databaseName = "fluentMongoKittenTest"
+    let execution = {
+      _ = try FluentService(host: host, databaseName: databaseName)
     }
+    XCTAssertNoThrow(try execution())
   }
   
   func test_connectToWrongDb_itThrows() {
-    
+    let host = "wronghostname"
+    let databaseName = "fluentMongoKittenTest"
+    let execution = {
+      _ = try FluentService(host: host, databaseName: databaseName)
+    }
+    XCTAssertThrowsError(try execution())
   }
   
   static var allTests = [

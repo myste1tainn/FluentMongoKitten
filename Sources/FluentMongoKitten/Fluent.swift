@@ -12,8 +12,6 @@ public protocol Fluent: FluentStatic, DocumentMappable {
   
   var id: ObjectId? { get set }
   
-  init(where query: Query)
-  
   @discardableResult
   func insert() -> EventLoopFuture<InsertReply>
   

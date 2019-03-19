@@ -28,7 +28,7 @@ extension Fluent {
   }
   
   @discardableResult
-  public func delete() throws -> EventLoopFuture<Int> {
+  public func delete() -> EventLoopFuture<Int> {
     return Self.collection.deleteOne(where: "id" == id)
   }
   

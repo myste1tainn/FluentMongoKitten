@@ -3,17 +3,19 @@
 //
 
 import Foundation
+import ObjectiveC
 import MongoKitten
 
 private var collectionKey: UInt = 0
+private let holder = ""
 
 extension Fluent {
   public static var collection: MongoKitten.Collection {
     get {
-      return objc_getAssociatedObject(self, &collectionKey) as! MongoKitten.Collection
+      return objc_getAssociatedObject(holder, &collectionKey) as! MongoKitten.Collection
     }
     set {
-      objc_setAssociatedObject(self, &collectionKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+      objc_setAssociatedObject(holder, &collectionKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
   }
 }
