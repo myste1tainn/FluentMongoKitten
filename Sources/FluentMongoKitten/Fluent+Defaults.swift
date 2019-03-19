@@ -35,8 +35,8 @@ extension Fluent {
   // MARK: - Alias / Shorthand
   
   @discardableResult
-  public func save() -> EventLoopFuture<InsertReply> {
-    return insert()
+  public func save() -> EventLoopFuture<UpdateReply> {
+    return Self.collection.upsert(where: "_id" == id, to: self.document)
   }
   
 }
