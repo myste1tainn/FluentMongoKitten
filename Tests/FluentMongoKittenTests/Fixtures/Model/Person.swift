@@ -32,6 +32,7 @@ struct Person: Fluent {
   }
   
   mutating func mapping(map: Map) {
+    id <- map["_id"]
     name <- map["name"]
     lastname <- map["lastname"]
   }

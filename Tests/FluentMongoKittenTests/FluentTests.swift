@@ -13,7 +13,7 @@ class FluentTests: XCTestCase {
     Fixtures.setup()
   }
   
-  override class func tearDown() {
+  override func tearDown() {
     Fixtures.reset()
   }
   
@@ -23,6 +23,45 @@ class FluentTests: XCTestCase {
     let execution = { reply = try person.insert().wait() }
     XCTAssertNoThrow(try execution())
     XCTAssertTrue((reply.isSuccessful))
+  }
+  
+  func test_find_fromPreviousValue_itFound() {
+    try? Person(name: "Arnon", lastname: "Keereena").insert().wait()
+    
+    let find = Person.find(where: "name" == "Arnon")
+    var person: Person?
+    let execution = { person = try find.getFirstResult().wait() }
+    XCTAssertNoThrow(try execution())
+    XCTAssertNotNil(person)
+    XCTAssertEqual(person?.name, "Arnon")
+    XCTAssertEqual(person?.lastname, "Keereena")
+  }
+  
+  func test_update_fromPreviousValue_itChangesOnTheSameId() {
+    try? Person(name: "Arnon", lastname: "Keereena").insert().wait()
+    var person = try! Person.find(where: "name" == "Arnon").getFirstResult().wait()
+    let expectId = person?.id
+    person?.lastname = "Acme"
+    try? person?.update().wait()
+    
+    var updatedPerson: Person?
+    let find = Person.find(where: "name" == "Arnon")
+    let execution = { updatedPerson = try find.getFirstResult().wait() }
+    XCTAssertNoThrow(try execution())
+    XCTAssertNotNil(updatedPerson)
+    XCTAssertEqual(updatedPerson?.id, expectId)
+    XCTAssertEqual(updatedPerson?.name, "Arnon")
+    XCTAssertEqual(updatedPerson?.lastname, "Acme")
+  }
+  
+  func test_delete_fromPreviousValue_itDeleted() {
+    try! Person(name: "Arnon", lastname: "Keereena").insert().wait()
+    let person = try! Person.find(where: "name" == "Arnon").getFirstResult().wait()
+    XCTAssertNotNil(person, "inserted not nil")
+    
+    let execution = { try person?.delete().wait() }
+    XCTAssertNoThrow(try execution())
+    XCTAssertNil(try! Person.find(where: "name" == "Arnon").getFirstResult().wait())
   }
   
 }

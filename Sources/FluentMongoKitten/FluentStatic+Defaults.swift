@@ -15,7 +15,7 @@ extension FluentStatic where Self: Fluent {
   @discardableResult
   public static func find(where query: Query) -> MappedCursor<FindCursor, Self> {
     return self.collection.find(query)
-                          .map { Self(document: $0)! }
+                          .map {Self(document: $0)! }
   }
   
   @discardableResult
