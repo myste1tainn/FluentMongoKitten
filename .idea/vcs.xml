@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/BSON.git--6460654225689736048" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/BSONMapper.git-5258040199053320101" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/MongoKitten.git--3904133596815277760" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-ssl-support.git--373416774595945185" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-ssl.git-1196535779658012154" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-zlib-support.git--5366106397089211661" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio.git-3827632831046257646" vcs="Git" />
+  </component>
+</project>
