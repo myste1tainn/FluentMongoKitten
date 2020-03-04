@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import ObjectiveC
 import MongoKitten
 
 private var collectionKey: UInt = 0
