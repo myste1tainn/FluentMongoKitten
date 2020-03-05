@@ -4,7 +4,6 @@
 
 import Foundation
 import MongoKitten
-import BSONMapper
 
 // Default implementations of fluency protocol
 extension Fluent {

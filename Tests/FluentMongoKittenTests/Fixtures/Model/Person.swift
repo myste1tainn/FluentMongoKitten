@@ -4,7 +4,6 @@
 
 import Foundation
 import BSON
-import BSONMapper
 import MongoKitten
 import FluentMongoKitten
 

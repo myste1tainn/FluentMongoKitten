@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import BSONMapper
 import MongoKitten
 
 // Fluency protocol represent a model that is capable of running query against mongodb
