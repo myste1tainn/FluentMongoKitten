@@ -3,12 +3,11 @@
 //
 
 import Foundation
-import BSONMapper
 import MongoKitten
 
 // Fluency protocol represent a model that is capable of running query against mongodb
 // where MongoKitten is the driver behind
-public protocol Fluent: FluentStatic, DocumentMappable {
+public protocol Fluent: FluentStatic, Codable {
   
   var id: ObjectId? { get set }
   
@@ -19,7 +18,7 @@ public protocol Fluent: FluentStatic, DocumentMappable {
   func update() -> EventLoopFuture<UpdateReply>
   
   @discardableResult
-  func delete() -> EventLoopFuture<Int>
+  func delete() -> EventLoopFuture<DeleteReply>
   
 }
 
