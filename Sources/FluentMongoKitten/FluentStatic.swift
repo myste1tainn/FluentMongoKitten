@@ -8,26 +8,22 @@ import MongoKitten
 public protocol FluentStatic {
   static var collectionName: String { get }
   
-  static var collection: MongoKitten.Collection { get set }
+  static var collection: MongoCollection { get set }
   
-  static func setCollection(database: Database)
+  static func setCollection(database: MongoDatabase)
   
-  @discardableResult
   static func insert(models: [Self]) -> [EventLoopFuture<InsertReply>]
   
-  @discardableResult
-  static func find(where query: Query) -> MappedCursor<FindCursor, Self>
+  static func findOne<Query: QueryCursor>(where query: Query) -> EventLoopFuture<Self>
   
-  @discardableResult
-  static func update(where query: Query, document: Document) -> EventLoopFuture<UpdateReply>
+  static func find<Query: QueryCursor>(where query: Query) -> MappedCursor<Query, Self>
   
-  @discardableResult
+  static func update<Query: QueryCursor>(where query: Query, document: Document) -> EventLoopFuture<UpdateReply>
+  
   static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>]
   
-  @discardableResult
-  static func delete(where query: Query) -> EventLoopFuture<Int>
+  static func delete<Query: QueryCursor>(where query: Query) -> EventLoopFuture<DeleteReply>
   
-  @discardableResult
-  static func delete(models: [Self]) -> [EventLoopFuture<Int>]
+  static func delete(models: [Self]) -> [EventLoopFuture<DeleteReply>]
   
 }

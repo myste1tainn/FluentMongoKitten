@@ -3,39 +3,39 @@
 //
 
 import Foundation
-import MongoKitten
+import NIO
 
 extension FluentStatic where Self: Fluent {
   
-  @discardableResult
   public static func insert(models: [Self]) -> [EventLoopFuture<InsertReply>] {
-    return models.map { $0.insert() }
+    models.map { $0.insert() }
   }
   
-  @discardableResult
-  public static func find(where query: Query) -> MappedCursor<FindCursor, Self> {
-    return self.collection.find(query)
-                          .map {Self(document: $0)! }
+  public static func find<Query: MongoKittenQuery>(where query: Query) -> MappedCursor<FindQueryBuilder, Self> {
+    self.collection.find(query)
+                   .map { try BSONDecoder().decode(Self.self, from: $0) }
   }
   
-  @discardableResult
-  public static func update(where query: Query, document: Document) -> EventLoopFuture<UpdateReply> {
-    return Self.collection.update(where: query, to: document)
+  public static func update<Query: MongoKittenQuery>(where query: Query,
+                                                     object: Self) throws -> EventLoopFuture<UpdateReply> {
+    update(where: query, document: try BSONEncoder().encode(object))
   }
   
-  @discardableResult
+  public static func update<Query: MongoKittenQuery>(where query: Query,
+                                                     document: Document) -> EventLoopFuture<UpdateReply> {
+    Self.collection.updateMany(where: query, to: document)
+  }
+  
   public static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>] {
-    return models.map { $0.update() }
+    models.map { $0.update() }
   }
   
-  @discardableResult
-  public static func delete(models: [Self]) -> [EventLoopFuture<Int>] {
-    return models.map { $0.delete() }
+  public static func delete(models: [Self]) -> [EventLoopFuture<DeleteReply>] {
+    models.map { $0.delete() }
   }
   
-  @discardableResult
-  public static func delete(where query: Query) -> EventLoopFuture<Int> {
-    return Self.collection.deleteAll(where: query)
+  public static func delete<Query: MongoKittenQuery>(where query: Query) -> EventLoopFuture<DeleteReply> {
+    Self.collection.deleteAll(where: query)
   }
   
 }

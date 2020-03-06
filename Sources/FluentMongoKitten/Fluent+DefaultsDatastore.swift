@@ -9,12 +9,13 @@ private var collectionKey: UInt = 0
 private let holder = ""
 
 extension Fluent {
-  public static var collection: MongoKitten.Collection {
+  public static var collection: MongoCollection {
     get {
-      return objc_getAssociatedObject(holder, &collectionKey) as! MongoKitten.Collection
+      return objc_getAssociatedObject(holder, &collectionKey) as! MongoCollection
     }
     set {
       objc_setAssociatedObject(holder, &collectionKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
   }
 }
+
