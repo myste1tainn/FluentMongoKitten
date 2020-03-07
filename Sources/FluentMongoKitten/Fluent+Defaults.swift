@@ -17,28 +17,29 @@ extension Fluent {
   }
   
   @discardableResult
-  public func insert() -> EventLoopFuture<InsertReply> {
-    return Self.collection.insertEncoded(self)
+  public func insert() throws -> EventLoopFuture<InsertReply> {
+    let document = try BSONEncoder().encode(self)
+    return Self.collection.insert(document)
   }
   
   @discardableResult
-  public func update() -> EventLoopFuture<UpdateReply> {
-    let document = try! BSONEncoder().encode(self)
-    return Self.collection.updateOne(where: "_id" == id, to: document)
+  public func update() throws -> EventLoopFuture<UpdateReply> {
+    let document = try BSONEncoder().encode(self)
+    return Self.collection.update(where: "_id" == id, to: document)
     
   }
   
   @discardableResult
-  public func delete() -> EventLoopFuture<DeleteReply> {
+  public func delete() -> EventLoopFuture<Int> {
     Self.collection.deleteOne(where: "_id" == id)
   }
   
   // MARK: - Alias / Shorthand
   
   @discardableResult
-  public func save() -> EventLoopFuture<UpdateReply> {
-    let document = try! BSONEncoder().encode(self)
-    return Self.collection.upsert("_id" == id, where: document)
+  public func save() throws -> EventLoopFuture<UpdateReply> {
+    let document = try BSONEncoder().encode(self)
+    return Self.collection.upsert(where: "_id" == id, to: document)
   }
   
 }

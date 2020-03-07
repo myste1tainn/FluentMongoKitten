@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import MongoKitten
+import NIO
 
 public protocol FluentStatic {
   static var collectionName: String { get }
@@ -22,8 +22,8 @@ public protocol FluentStatic {
   
   static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>]
   
-  static func delete<Query: QueryCursor>(where query: Query) -> EventLoopFuture<DeleteReply>
+  static func delete<Query: QueryCursor>(where query: Query) -> EventLoopFuture<Int>
   
-  static func delete(models: [Self]) -> [EventLoopFuture<DeleteReply>]
+  static func delete(models: [Self]) -> [EventLoopFuture<Int>]
   
 }

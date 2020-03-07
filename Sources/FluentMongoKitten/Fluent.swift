@@ -11,14 +11,11 @@ public protocol Fluent: FluentStatic, Codable {
   
   var id: ObjectId? { get set }
   
-  @discardableResult
   func insert() -> EventLoopFuture<InsertReply>
   
-  @discardableResult
   func update() -> EventLoopFuture<UpdateReply>
   
-  @discardableResult
-  func delete() -> EventLoopFuture<DeleteReply>
+  func delete() -> EventLoopFuture<Int>
   
 }
 
