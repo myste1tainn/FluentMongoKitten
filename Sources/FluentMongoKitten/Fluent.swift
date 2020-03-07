@@ -11,9 +11,9 @@ public protocol Fluent: FluentStatic, Codable {
   
   var id: ObjectId? { get set }
   
-  func insert() -> EventLoopFuture<InsertReply>
+  func insert() throws -> EventLoopFuture<InsertReply>
   
-  func update() -> EventLoopFuture<UpdateReply>
+  func update() throws -> EventLoopFuture<UpdateReply>
   
   func delete() -> EventLoopFuture<Int>
   

@@ -11,6 +11,10 @@ extension FluentStatic where Self: Fluent {
         models.map { $0.insert() }
     }
     
+    public static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self> {
+        self.collection.findOne(query)
+    }
+    
     public static func find(where query: MongoKittenQuery) -> MappedCursor<FindCursor, Self> {
         self.collection.find(query)
             .map { try BSONDecoder().decode(Self.self, from: $0) }
