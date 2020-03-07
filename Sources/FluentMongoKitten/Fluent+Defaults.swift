@@ -17,13 +17,17 @@ extension Fluent {
   }
   
   public func insert() throws -> EventLoopFuture<InsertReply> {
-    let document = try BSONEncoder().encode(self)
+    var object = self
+    if object.id == nil {
+        object.id = ObjectId.init()
+    }
+    let document = try BSONEncoder().encode(object)
     return Self.collection.insert(document)
   }
   
   public func update() throws -> EventLoopFuture<UpdateReply> {
     let document = try BSONEncoder().encode(self)
-    return Self.collection.update(where: "_id" == id, to: document)
+    return Self.collection.update(where: ["_id": id], to: document)
     
   }
   

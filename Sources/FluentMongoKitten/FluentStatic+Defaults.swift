@@ -7,12 +7,17 @@ import NIO
 
 extension FluentStatic where Self: Fluent {
     
-    public static func insert(models: [Self]) -> [EventLoopFuture<InsertReply>] {
-        models.map { $0.insert() }
+    public static func insert(models: [Self]) throws -> [EventLoopFuture<InsertReply>] {
+        try models.map { try $0.insert() }
     }
     
-    public static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self> {
+    public static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self?> {
         self.collection.findOne(query)
+            .map { (document: Document?) -> Self? in
+                guard let doc = document else { return nil}
+                // TODO: Find a way to not force unwrap this
+                return try! BSONDecoder().decode(Self.self, from: doc)
+        }
     }
     
     public static func find(where query: MongoKittenQuery) -> MappedCursor<FindCursor, Self> {
@@ -30,8 +35,8 @@ extension FluentStatic where Self: Fluent {
         Self.collection.update(where: query, to: document)
     }
     
-    public static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>] {
-        models.map { $0.update() }
+    public static func update(models: [Self]) throws -> [EventLoopFuture<UpdateReply>] {
+        try models.map { try $0.update() }
     }
     
     public static func delete(models: [Self]) -> [EventLoopFuture<Int>] {

@@ -12,17 +12,17 @@ public protocol FluentStatic {
   
   static func setCollection(database: MongoDatabase)
   
-  static func insert(models: [Self]) -> [EventLoopFuture<InsertReply>]
+  static func insert(models: [Self]) throws -> [EventLoopFuture<InsertReply>]
   
-  static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self>
+  static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self?>
   
   static func find(where query: MongoKittenQuery) -> MappedCursor<FindCursor, Self>
   
   static func update(where query: MongoKittenQuery, document: Document) -> EventLoopFuture<UpdateReply>
   
-  static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>]
+  static func update(models: [Self]) throws -> [EventLoopFuture<UpdateReply>]
   
-  static func delete<Query: QueryCursor>(where query: Query) -> EventLoopFuture<Int>
+  static func delete(where query: MongoKittenQuery) -> EventLoopFuture<Int>
   
   static func delete(models: [Self]) -> [EventLoopFuture<Int>]
   
