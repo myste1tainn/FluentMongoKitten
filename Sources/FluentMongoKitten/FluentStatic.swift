@@ -14,11 +14,11 @@ public protocol FluentStatic {
   
   static func insert(models: [Self]) -> [EventLoopFuture<InsertReply>]
   
-  static func findOne<Query: QueryCursor>(where query: Query) -> EventLoopFuture<Self>
+  static func findOne(where query: MongoKittenQuery) -> EventLoopFuture<Self>
   
-  static func find<Query: QueryCursor>(where query: Query) -> MappedCursor<Query, Self>
+  static func find(where query: MongoKittenQuery) -> MappedCursor<FindCursor, Self>
   
-  static func update<Query: QueryCursor>(where query: Query, document: Document) -> EventLoopFuture<UpdateReply>
+  static func update(where query: MongoKittenQuery, document: Document) -> EventLoopFuture<UpdateReply>
   
   static func update(models: [Self]) -> [EventLoopFuture<UpdateReply>]
   

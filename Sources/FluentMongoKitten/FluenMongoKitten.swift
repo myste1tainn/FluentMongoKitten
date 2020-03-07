@@ -10,7 +10,7 @@ public typealias BSONEncoder = BSON.BSONEncoder
 public typealias BSONDecoder = BSON.BSONDecoder
 public typealias Document = BSON.Document
 
-public typealias FindQueryBuilder = MongoKitten.FindCursor
+public typealias FindCursor = MongoKitten.FindCursor
 public typealias MongoCollection = MongoKitten.Collection
 public typealias QueryCursor = MongoKitten.QueryCursor
 public typealias MongoDatabase = MongoKitten.Database
