@@ -9,6 +9,7 @@ import BSON
 public typealias BSONEncoder = BSON.BSONEncoder
 public typealias BSONDecoder = BSON.BSONDecoder
 public typealias Document = BSON.Document
+public typealias ObjectId = BSON.ObjectId
 
 public typealias FindCursor = MongoKitten.FindCursor
 public typealias MongoCollection = MongoKitten.Collection

@@ -5,17 +5,25 @@
 import Foundation
 import MongoKitten
 
-private var collectionKey: UInt = 0
-private let holder = ""
+private var storage = [String: MongoCollection]()
 
 extension Fluent {
-  public static var collection: MongoCollection {
-    get {
-      return objc_getAssociatedObject(holder, &collectionKey) as! MongoCollection
+    public static var collection: MongoCollection {
+        get {
+            if let collection = storage[collectionName] {
+                return collection
+            } else {
+                fatalError(
+                    """
+                    Collection instance for \(collectionName) is not yet registered,
+                    it must be done via `FluentService.register(_:)`
+                    """
+                )
+            }
+        }
+        set {
+            storage[collectionName] = newValue
+        }
     }
-    set {
-      objc_setAssociatedObject(holder, &collectionKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    }
-  }
 }
 
